@@ -17,7 +17,6 @@ from fairseq.dataclass.constants import (
     GENERATION_DECODING_FORMAT_CHOICES,
     LOG_FORMAT_CHOICES,
     PIPELINE_CHECKPOINT_CHOICES,
-    PRINT_ALIGNMENT_CHOICES,
     ZERO_SHARDING_CHOICES,
 )
 
@@ -744,12 +743,10 @@ class GenerationConfig(FairseqDataclass):
         default=-1.0,
         metadata={"help": "strength of diversity penalty for Diverse Siblings Search"},
     )
-    print_alignment: Optional[PRINT_ALIGNMENT_CHOICES] = field(
-        default=None,
+    print_alignment: bool = field (
+        default=False,
         metadata={
             "help": "if set, uses attention feedback to compute and print alignment to source tokens "
-            "(valid options are: hard, soft, otherwise treated as hard alignment)",
-            "argparse_const": "hard",
         },
     )
     print_step: bool = field(

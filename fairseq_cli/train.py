@@ -246,6 +246,8 @@ def train(
                 metrics.reset_meters("train_inner")
 
         end_of_epoch = not itr.has_next()
+        if i == 1500:
+            end_of_epoch = True
         valid_losses, should_stop = validate_and_save(
             cfg, trainer, task, epoch_itr, valid_subsets, end_of_epoch
         )
@@ -274,7 +276,7 @@ def validate_and_save(
     num_updates = trainer.get_num_updates()
     max_update = cfg.optimization.max_update or math.inf
     do_save = (
-        (end_of_epoch and epoch_itr.epoch % cfg.checkpoint.save_interval == 0)
+        end_of_epoch
         or num_updates >= max_update
         or (
             cfg.checkpoint.save_interval_updates > 0
