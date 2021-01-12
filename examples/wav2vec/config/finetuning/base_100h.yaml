@@ -1,7 +1,7 @@
 # @package _group_
 
 common:
-  fp16: true
+  fp16: false
   log_format: json
   log_interval: 200
 
@@ -12,18 +12,18 @@ checkpoint:
 task:
   _name: audio_pretraining
   data: ???
-  normalize: false
+  normalize: true
   labels: ltr
 
 dataset:
   num_workers: 6
-  max_tokens: 3200000
+  max_tokens: 3200000 #(small) -  1280000 (large)
   skip_invalid_size_inputs_valid_test: true
-  valid_subset: dev_other
+  valid_subset: valid
 
 distributed_training:
   ddp_backend: no_c10d
-  distributed_world_size: 2
+  distributed_world_size: 1
 
 criterion:
   _name: ctc

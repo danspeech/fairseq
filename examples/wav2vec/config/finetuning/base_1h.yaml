@@ -1,9 +1,9 @@
 # @package _group_
 
 common:
-  fp16: true
+  fp16: false
   log_format: json
-  log_interval: 200
+  log_interval: 10
 
 checkpoint:
   save_interval: 1000
@@ -20,15 +20,15 @@ task:
 
 dataset:
   num_workers: 6
-  max_tokens: 3200000
+  max_tokens: 460000
   skip_invalid_size_inputs_valid_test: true
-  validate_after_updates: 10000
-  validate_interval: 1000
-  valid_subset: dev_other
+  validate_after_updates: 100
+  validate_interval: 100
+  valid_subset: valid
 
 distributed_training:
   ddp_backend: no_c10d
-  distributed_world_size: 2
+  distributed_world_size: 1
 
 criterion:
   _name: ctc
@@ -38,7 +38,7 @@ optimization:
   max_update: 13000
   lr: [0.00005]
   sentence_avg: true
-  update_freq: [4]
+  update_freq: [8]
 
 optimizer:
   _name: adam
@@ -60,5 +60,5 @@ model:
   layerdrop: 0.1
   activation_dropout: 0.1
   feature_grad_mult: 0.0
-  freeze_finetune_updates: 10000
+  freeze_finetune_updates: 10
 
