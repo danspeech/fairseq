@@ -3,11 +3,11 @@
 common:
   fp16: false
   log_format: json
-  log_interval: 10
+  log_interval: 200
 
 checkpoint:
-  save_interval: 1000
-  save_interval_updates: 50
+  save_interval: 5000
+  save_interval_updates: 5000
   keep_interval_updates: 1
   no_epoch_checkpoints: true
   best_checkpoint_metric: wer
@@ -20,10 +20,10 @@ task:
 
 dataset:
   num_workers: 6
-  max_tokens: 460000
+  max_tokens: 750000 #(adjusting for update freq) # 480000 (12gb GPUs) # 640000 (16gb GPUs) # 1280000 (32gb GPUs) 460000
   skip_invalid_size_inputs_valid_test: true
-  validate_after_updates: 100
-  validate_interval: 100
+  validate_after_updates: 5000
+  validate_interval: 5000
   valid_subset: valid
 
 distributed_training:
@@ -33,9 +33,10 @@ distributed_training:
 criterion:
   _name: ctc
   zero_infinity: true
+  #wer_args: '["/home/rafje/.danspeech/lms/dsl_3gram.klm", "/home/rafje/data/nst/manifest/valid.lst", 4, -1]'
 
 optimization:
-  max_update: 13000
+  max_update: 120000
   lr: [0.00005]
   sentence_avg: true
   update_freq: [8]
@@ -60,5 +61,5 @@ model:
   layerdrop: 0.1
   activation_dropout: 0.1
   feature_grad_mult: 0.0
-  freeze_finetune_updates: 10
+  freeze_finetune_updates: 0 #8000
 
