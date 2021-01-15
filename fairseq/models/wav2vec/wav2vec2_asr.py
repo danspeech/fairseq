@@ -308,7 +308,7 @@ class Wav2VecEncoder(FairseqEncoder):
 
         super().__init__(task.source_dictionary)
 
-        d = w2v_args.model.encoder_embed_dim
+        d = 768
 
         self.w2v_model = model
 
